@@ -1,0 +1,39 @@
+# .circleci/config.yml
+
+# Utilise la version 2.1 de la configuration CircleCI
+version: 2.1
+
+# --- DÉFINITION DES JOBS (Définit les tâches à exécuter) ---
+jobs:
+  build-and-test:
+    # 1. Sélectionne l'image Docker avec Python 3.12 (Assure la cohérence)
+    docker:
+      - image: cimg/python:3.12.4 
+    
+    # Répertoire de travail
+    working_directory: ~/repo
+    
+    steps:
+      # 2. Cloner le dépôt Git (télécharger le code)
+      - checkout
+      
+      # 3. Installer l'outil tox
+      - run:
+          name: Installation de l'outil Tox
+          command: |
+            pip install tox
+            
+      # 4. Exécuter tox pour lancer l'entraînement
+      - run:
+          name: Exécution du Pipeline d'Entraînement via Tox
+          command: |
+            # Se déplace dans le dossier contenant tox.ini
+            cd packages/skin_cancer_model
+            tox
+
+# --- DÉFINITION DU WORKFLOW (Ordonnance les jobs) ---
+workflows:
+  version: 2
+  build-and-test-workflow:
+    jobs:
+      - build-and-test

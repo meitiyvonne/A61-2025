@@ -6,9 +6,13 @@ import os
 
 # --- CONSTANTES DE CHEMINS ---
 # Le chemin est ajusté pour pointer vers <repo_root>/data/HAM10000_metadata.csv
-REPO_ROOT = os.path.join(os.path.dirname(__file__), '..', '..', '..') 
-DATA_FILE = 'HAM10000_metadata.csv'
-DATA_PATH = os.path.join(REPO_ROOT, 'data', DATA_FILE)
+# REPO_ROOT = os.path.join(os.path.dirname(__file__), '..', '..', '..') 
+# DATA_FILE = 'HAM10000_metadata.csv'
+# DATA_PATH = os.path.join(REPO_ROOT, 'data', DATA_FILE)
+import pathlib
+PACKAGE_ROOT = pathlib.Path(__file__).resolve().parent.parent.parent # remonter trois niveaux pour atteindre la racine du paquet (A61-2025)
+DATA_PATH = PACKAGE_ROOT / 'data' / 'HAM10000_metadata.csv'
+
 
 # Nom de la colonne cible pour la classification
 TARGET = 'dx' 
