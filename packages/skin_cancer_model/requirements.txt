@@ -1,0 +1,17 @@
+# packages/skin_cancer_model/requirements.txt
+
+# --- Dépendances de production principales (Production Dependencies) ---
+# Versions basées sur votre environnement Python 3.12.12
+
+# Apprentissage profond et traitement d'images
+torch==2.9.0
+torchvision==0.24.0
+Pillow==11.3.0
+
+# Traitement des données
+numpy==2.0.2
+pandas==2.2.2
+scikit-learn==1.6.1
+
+# Dépendances auxiliaires (joblib pour la sérialisation des modèles)
+joblib==1.4.2
