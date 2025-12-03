@@ -15,6 +15,9 @@ from datetime import datetime
 from skin_cancer_model import pipeline
 from skin_cancer_model.datasets import data_manager
 from skin_cancer_model import preprocessors
+
+from skin_cancer_model import __version__ as _version
+from skin_cancer_model.config import IMAGE_ROOT # AJOUTER CETTE LIGNE
 # ---------------------------------------------------------------------------------
 # --- Constantes de configuration pour l'entraînement ---
 EPOCHS = 20
@@ -22,8 +25,12 @@ BATCH_SIZE = 32
 LEARNING_RATE = 1e-4
 
 # Chemins de sauvegarde
-SAVE_DIR = os.path.join(os.path.dirname(__file__), 'skin_cancer_model', 'trained_models')
-MODEL_SAVE_FILE = f'best_model_{datetime.now().strftime("%Y%m%d%H%M")}.pt'
+# SAVE_DIR = os.path.join(os.path.dirname(__file__), 'skin_cancer_model', 'trained_models')
+# MODEL_SAVE_FILE = f'best_model_{datetime.now().strftime("%Y%m%d%H%M")}.pt'
+
+# Chemins de sauvegarde: UTILISER LE DOSSIER DU PACKAGE ET LA VERSION
+MODEL_SAVE_DIR = os.path.join(os.path.dirname(__file__), 'skin_cancer_model') # Le dossier 'skin_cancer_model' interne
+MODEL_SAVE_FILE = f'skin_cancer_model_v{_version}.pt' # Nom de fichier fixe basé sur la version
 
 # --- 1. Définition du Dataset PyTorch ---
 class SkinCancerDataset(Dataset):
@@ -39,8 +46,9 @@ class SkinCancerDataset(Dataset):
         
         # !!! Chemin racine OÙ SONT STOCKÉS VOS FICHIERS IMAGES (ISIC_*.jpg) !!!
         # MODIFIER CE CHEMIN: Exemple pour un dossier 'data/images' à la racine du dépôt
-        self.REPO_ROOT = os.path.join(os.path.dirname(__file__), '..', '..') 
-        self.IMAGE_ROOT = os.path.join(self.REPO_ROOT, 'data', 'images') 
+        # self.REPO_ROOT = os.path.join(os.path.dirname(__file__), '..', '..') 
+        # self.IMAGE_ROOT = os.path.join(self.REPO_ROOT, 'data', 'images') 
+        self.IMAGE_ROOT = IMAGE_ROOT
 
     def __len__(self):
         """Retourne le nombre total d'échantillons."""
@@ -50,7 +58,9 @@ class SkinCancerDataset(Dataset):
         """Récupère et prétraite un échantillon."""
         # Traitement de l'image
         image_id = self.X_paths.iloc[idx]
-        image_path = os.path.join(self.IMAGE_ROOT, f"{image_id}.jpg") 
+        # image_path = os.path.join(self.IMAGE_ROOT, f"{image_id}.jpg") 
+        image_path = os.path.join(self.IMAGE_ROOT, 'img01', f"{image_id}.jpg")
+        # image_tensor = preprocessors.load_and_transform_image(image_path, is_training=True)
         image_tensor = preprocessors.load_and_transform_image(image_path, is_training=True)
 
         # Traitement de l'étiquette
@@ -117,15 +127,27 @@ def run_training():
         print(f"Epoch {epoch+1}/{EPOCHS}, Perte (Loss): {avg_loss:.4f}")
         
         # Implémentation de l'arrêt anticipé (Early Stopping) et de la sauvegarde
+        # if avg_loss < best_loss:
+        #     best_loss = avg_loss
+        #     early_stop_counter = 0
+            
+        #     os.makedirs(SAVE_DIR, exist_ok=True)
+        #     model_path = os.path.join(SAVE_DIR, MODEL_SAVE_FILE)
+            
+        #     torch.save(model.state_dict(), model_path)
+        #     print(f" -> Meilleur modèle sauvegardé à {model_path} (Perte: {best_loss:.4f})")
         if avg_loss < best_loss:
             best_loss = avg_loss
             early_stop_counter = 0
-            
-            os.makedirs(SAVE_DIR, exist_ok=True)
-            model_path = os.path.join(SAVE_DIR, MODEL_SAVE_FILE)
-            
+
+            # 1. Recalculer le chemin de sauvegarde (Utilise les variables définies en haut )
+            os.makedirs(MODEL_SAVE_DIR, exist_ok=True)
+            model_path = os.path.join(MODEL_SAVE_DIR, MODEL_SAVE_FILE)
+
+            # 2. Sauvegarder avec le nom basé sur la version
             torch.save(model.state_dict(), model_path)
-            print(f" -> Meilleur modèle sauvegardé à {model_path} (Perte: {best_loss:.4f})")
+            print(f" -> Meilleur modèle v{_version} sauvegardé à {model_path} (Perte: {best_loss: .4f})")
+
         else:
             early_stop_counter += 1
             if early_stop_counter >= 5: 

@@ -15,3 +15,7 @@ scikit-learn==1.6.1
 
 # Dépendances auxiliaires (joblib pour la sérialisation des modèles)
 joblib==1.4.2
+
+# API de Prédiction
+Flask
+gunicorn
