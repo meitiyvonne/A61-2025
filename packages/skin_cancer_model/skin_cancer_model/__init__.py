@@ -4,6 +4,20 @@
 import logging
 from .config import LOG_DIR, LOG_FILE_NAME, LOGGING_LEVEL
 
+
+# ======================================
+# Configuration de la version (FIX NÉCESSAIRE pour la CI)
+# ======================================
+
+# Importe la variable __version__ depuis le module interne _version.py
+# Ceci permet aux autres modules (comme train_pipeline.py) d'utiliser
+# 'from skin_cancer_model import __version__'
+try:
+    from ._version import __version__  
+except ImportError:
+    # Cas de secours
+    __version__ = "0.0.0"
+
 # ======================================
 # Configuration de la journalisation (Logs)
 # ======================================
@@ -35,4 +49,5 @@ def get_logger(logger_name):
 
 # Obtient le logger principal du package
 logger = get_logger(__name__)
-logger.info(f"Journaliseur du package {__name__} initialisé.")
+# logger.info(f"Journaliseur du package {__name__} initialisé.")
+logger.info(f"Journaliseur du package {__name__} initialisé (v{__version__}).")

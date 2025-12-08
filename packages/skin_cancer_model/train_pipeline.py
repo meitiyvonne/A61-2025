@@ -18,6 +18,9 @@ from skin_cancer_model import preprocessors
 
 from skin_cancer_model import __version__ as _version
 from skin_cancer_model.config import IMAGE_ROOT # AJOUTER CETTE LIGNE
+
+# Dans train_pipeline.py
+from skin_cancer_model import __version__ as _version
 # ---------------------------------------------------------------------------------
 # --- Constantes de configuration pour l'entraînement ---
 EPOCHS = 20
