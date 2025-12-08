@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Service de Prédiction du Cancer de la Peau</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        input[type="file"], input[type="number"], select { width: 100%; padding: 10px; margin: 8px 0; display: inline-block; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { background-color: #4CAF50; color: white; padding: 14px 20px; margin: 8px 0; border: none; border-radius: 4px; cursor: pointer; width: 100%; }
+        .error { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>API de Prédiction du Cancer de la Peau (Modèle Embedding)</h2>
+        
+        {% if error %}
+            <p class="error">Erreur : {{ error }}</p>
+        {% endif %}
+        
+        <form method="POST" action="/predict" enctype="multipart/form-data">
+            
+            <label for="image">Veuillez sélectionner une image (JPG/PNG)</label>
+            <input type="file" id="image" name="image" required>
+            
+            <label for="age">Âge (Age) :</label>
+            <input type="number" id="age" name="age" required min="1">
+            
+            <label for="sex">Sexe (Sex) :</label>
+            <select id="sex" name="sex" required>
+                <option value="male">Homme</option>
+                <option value="female">Femme</option>
+                <option value="other">Autre</option>
+            </select>
+            
+            <label for="localization">Localisation (Localization) :</label>
+            <select id="localization" name="localization" required>
+                <option value="torso">Torse</option>
+                <option value="arm">Bras</option>
+                <option value="leg">Jambe</option>
+                <option value="face">Visage</option>
+                <option value="neck">Cou</option>
+                <option value="other">Autre</option>
+            </select>
+            
+            <button type="submit">Lancer la Prédiction</button>
+        </form>
+    </div>
+</body>
+</html>

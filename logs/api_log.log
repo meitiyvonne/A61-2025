@@ -1,0 +1,8 @@
+2025-12-08 13:45:39,666 - skin_cancer_model - INFO - Journaliseur du package skin_cancer_model initialisé.
+2025-12-08 13:45:39,666 - skin_cancer_model.__init__ - INFO - Journaliseur du package skin_cancer_model.__init__ initialisé.
+2025-12-08 13:45:59,406 - skin_cancer_model.__init__ - INFO - Tentative de chargement du modèle: C:\Users\yvonne\Documents\cours-A61-tp\A61-2025\packages\skin_cancer_model\skin_cancer_model\skin_cancer_model_v.0.0.1.pt
+2025-12-08 13:46:09,505 - skin_cancer_model - INFO - Journaliseur du package skin_cancer_model initialisé.
+2025-12-08 13:46:09,512 - skin_cancer_model.__init__ - INFO - Journaliseur du package skin_cancer_model.__init__ initialisé.
+2025-12-08 13:46:15,074 - skin_cancer_model.__init__ - INFO - Tentative de chargement du modèle: C:\Users\yvonne\Documents\cours-A61-tp\A61-2025\packages\skin_cancer_model\skin_cancer_model\skin_cancer_model_v.0.0.1.pt
+2025-12-08 13:48:35,036 - skin_cancer_model.__init__ - INFO - Vérification et normalisation de l'image réussies.
+2025-12-08 13:50:13,784 - skin_cancer_model.__init__ - INFO - Vérification et normalisation de l'image réussies.
