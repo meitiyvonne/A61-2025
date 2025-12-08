@@ -1,0 +1,16 @@
+Metadata-Version: 2.4
+Name: skin_cancer_model
+Version: 0.0.1
+Summary: API de Prédiction du Cancer de la Peau
+Author: Meiti Hsia
+Requires-Dist: Flask
+Requires-Dist: marshmallow
+Requires-Dist: gunicorn
+Requires-Dist: requests
+Requires-Dist: pandas
+Requires-Dist: scikit-learn
+Requires-Dist: Pillow
+Requires-Dist: Werkzeug==2.2.2
+Dynamic: author
+Dynamic: requires-dist
+Dynamic: summary

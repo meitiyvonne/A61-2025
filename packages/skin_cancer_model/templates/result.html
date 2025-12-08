@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Résultat de la Prédiction</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+
+            .container {
+                max-width: 600px;
+                margin: auto;
+                padding: 20px;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+            }
+
+            .result-box {
+                text-align: center;
+                margin-top: 20px;
+                padding: 30px;
+                border-radius: 10px;
+            }
+
+            .positive {
+                background-color: #fdd;
+                border: 2px solid red;
+            }
+
+            .negative {
+                background-color: #dfd;
+                border: 2px solid green;
+            }
+
+            .result-text {
+                font-size: 2em;
+                margin: 0;
+            }
+
+            .detail-text {
+                font-size: 1.2em;
+                color: #555;
+            }
+
+            a {
+                display: block;
+                margin-top: 20px;
+                color: #4CAF50;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <h2>Résultat de la Prédiction</h2>
+
+            {% set is_positive = prediction == 'Oui (Cancer de la peau)' %}
+
+            <div class="result-box {% if is_positive %}positive{% else %}negative{% endif %}">
+                <p class="result-text">Résultat de la Prédiction : {{ prediction }}</p>
+                <p class="detail-text">Confiance du Modèle : {{ probability | round(4) * 100 }}%</p>
+                <p class="detail-text">Classe Diagnostique : {{ diagnosis_class }}</p>
+                <p class="detail-text">Version du Modèle : {{ model_version }}</p>
+            </div>
+
+            <a href="/">← Retour pour une Nouvelle Prédiction</a>
+        </div>
+    </body>
+
+</html>

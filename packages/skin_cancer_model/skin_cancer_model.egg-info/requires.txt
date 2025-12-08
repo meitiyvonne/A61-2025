@@ -1,0 +1,8 @@
+Flask
+marshmallow
+gunicorn
+requests
+pandas
+scikit-learn
+Pillow
+Werkzeug==2.2.2
