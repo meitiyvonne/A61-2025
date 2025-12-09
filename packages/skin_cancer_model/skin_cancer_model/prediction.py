@@ -25,12 +25,39 @@ class SkinCancerModel(nn.Module):
     """ Modèle multimodal (Image CNN + Métadonnées) utilisant ResNet18 """
     def __init__(self, num_classes=len(DIAGNOSIS_CLASSES)):
         super(SkinCancerModel, self).__init__()
-        
+                
         # 1. Backbone CNN (ResNet18)
         try:
-            self.cnn = torch.hub.load('pytorch/vision:v0.10.0', 'resnet18', weights=None)
-        except Exception:
-            self.cnn = nn.Sequential(*list(nn.ModuleList(torch.hub.load('pytorch/vision:v0.10.0', 'resnet18', weights=None).children())[:-1]))
+            # Tente le chargement standard avec pretrained=False (CORRIGÉ)
+            self.cnn = torch.hub.load('pytorch/vision:v0.10.0', 'resnet18', pretrained=False) 
+            
+            # Si le chargement réussit, on retire simplement la couche FC
+            self.cnn.fc = nn.Identity() 
+
+        except Exception as e:
+            # Si le chargement direct échoue (e.g., erreur réseau, dépendance, ou structure ModuleList)
+            logger.warning(f"Échec du chargement ResNet direct: {e}. Tentative de construction CNN manuelle.")
+            
+            # 1. Charger le modèle complet
+            full_resnet = torch.hub.load('pytorch/vision:v0.10.0', 'resnet18', pretrained=False)
+            
+            # 2. Récupérer toutes les couches SAUF la dernière ([:-1])
+            cnn_modules = list(full_resnet.children())[:-1] 
+
+            # 3. Assembler les couches restantes dans un nn.Sequential
+            # C'est la structure correcte pour créer le backbone du CNN
+            self.cnn = nn.Sequential(*cnn_modules)
+        # try:
+        #     self.cnn = torch.hub.load('pytorch/vision:v0.10.0', 'resnet18', pretrained=False) 
+        # except Exception:
+        #     self.cnn = nn.Sequential(*list(nn.ModuleList(
+        #         torch.hub.load('pytorch/vision:v0.10.0', 'resnet18', pretrained=False)
+        #     ).children())[:-1])   
+                                                                         
+        # try:
+        #     self.cnn = torch.hub.load('pytorch/vision:v0.10.0', 'resnet18', weights=None)
+        # except Exception:
+        #     self.cnn = nn.Sequential(*list(nn.ModuleList(torch.hub.load('pytorch/vision:v0.10.0', 'resnet18', weights=None).children())[:-1]))
 
         self.cnn.fc = nn.Identity() 
         self.cnn_output_size = 512 
