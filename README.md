@@ -208,6 +208,55 @@ Ce chapitre répertorie les défis techniques critiques rencontrés lors de la m
 
 
 
+## Démarrage du Service API (Conteneur Docker)
+
+Pour exécuter le service de prédiction Flask de manière fiable et sans dépendance locale, le professeur (ou tout utilisateur) peut utiliser l’image Docker finale fournie dans ce dépôt.
+
+
+
+**Prérequis**
+
+* Docker Engine installé et fonctionne.
+
+**1. Construction de l’image Docker (Build)**
+
+Naviguez vers le répertoire racine du projet (où se trouve le Dockerfile) et construisez l’image :
+
+```c
+docker build -t a61-2025-api .	
+```
+
+* Expliquer : 
+  * -t a61-2025-API : Donnez un nom à cette image, comme a61-2025-API
+  * . : Dis à Docker de chercher *le fichier Docker* dans le répertoire actuel.
+
+
+
+**2. Démarrage du Conteneur (Run)**
+
+Lancez le conteneur en arrière-plan et mappez le port 5000 de l‘hôte au port 5000 du conteneur : 
+
+```c
+docker run -d -p 5000:5000 --name skin_api_prod a61-2025-api	
+```
+
+* Expliquer : 
+  * -d : Laisser le conteneur fonctionner en arrière-plan (mode détachement).
+  * -p 5000:5000 : Cartographie le port Flask 5000 à l’intérieur du conteneur vers le port 5000 de l’hôte.
+  * --name skin_api_prod : Donnez au conteneur un nom facilement reconnaissable.
+  * a61-2025-api : Le nom de l’image que vous avez créée à l’étape 1.
+
+
+
+**3. Vérification des Points d’Accès (Test Endpoints)**
+
+Une fois le conteneur démarré,  on peut tester le point de terminaison API dans le navigateur ou en utilisant curl, l’API est accessible via l’hôte local :
+
+* Vérification de Version : http:éé127.0.0.1:5000/version (Terminaison de version)
+* Point de Prédiction : http://127.0.0.1:500/v1/predict/ (prêt à recevoir des requêtes POST basé sur la configuration de l’application Flask)
+
+
+
 ## Conclusion
 
 À la lumière des différentes étapes parcourues et des défis rencontrés lors de ce Travail Pratique, je peux tirer plusieurs conclusions significatives.
