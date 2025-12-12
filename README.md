@@ -1,11 +1,5 @@
 # TP-1 : A61-2025
 
-Étudiante : Meiti Hsia
-
-ID : 1390517
-
-Date : 12/11/2025
-
 
 
 # 📖 Documentation d Projet : Modèle de Diagnostic du Cancer de la Peau
