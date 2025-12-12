@@ -29,7 +29,7 @@ setup(
     version=version,  
     description='API de Prédiction du Cancer de la Peau',
     author='Meiti Hsia',
-    # find_packages 的 include 參數現在是動態的
+    # 'include' dans le find_packages, les paramètres sont dynamiques
     packages=find_packages(include=[PACKAGE_NAME, f'{PACKAGE_NAME}.*']), 
     install_requires=[
         'Flask',
@@ -39,7 +39,7 @@ setup(
         'pandas',
         'scikit-learn',
         'Pillow',
-        # Verrouillage de version important (解決 Werkzeug 衝突)
+        # Verrouillage de version important (fix conflit: Werkzeug)
         'Werkzeug==2.2.2'
     ],
     include_package_data=True,
