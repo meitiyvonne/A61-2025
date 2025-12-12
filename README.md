@@ -257,6 +257,40 @@ Une fois le conteneur démarré,  on peut tester le point de terminaison API dan
 
 
 
+## Accès à l’Interface Web (Démonstrateur)
+
+Le service API fonctionne également comme un démonstrateur Web simple permettant de téléverser des images et de tester la prédiction directement via un navigateur.
+
+
+
+**Prérequis**
+
+* Le conteneur Docker *skin_api_prod* doit être en cours d’exécution.
+
+**1. Accès à la Page d’Acceil**
+
+Ouvrez vote navigateur et accédez  l’adresse suivante : 
+
+```c
+http://127.0.0.1:5000/	
+```
+
+
+
+* **Résultat Attendu : **On doit voir la page d’accueil(rendu de *templates/index.html*) contenant le formulaire de téléversement de l’image et les champs de métadonnées (Âge, Sexe, Localisation).
+
+**2. Test de la Prédiction**
+
+Pour tester le processus complet de bout en bout:
+
+1. Téléversez une image de lésion cutanée.
+2. Remplissez les champs des **Métadonnée Cliniques** (Âge, Sexe, Localisation).
+3. Cliquez sur le bouton Lancer la Prédiction.
+
+* **Résultat Attendu : ** Le navigateur doit afficher la page de résultats (rendu de *templates/result.html*), affichant la **Prédiction** finale, la **Probabilité** associée et la **Classe de diagnostic** prédite par le modèle.
+
+
+
 ## Conclusion
 
 À la lumière des différentes étapes parcourues et des défis rencontrés lors de ce Travail Pratique, je peux tirer plusieurs conclusions significatives.
