@@ -99,11 +99,11 @@ class SkinCancerModel(nn.Module):
     
 #     # --- TEMPORAIRE : Utiliser la méthode stricte pour révéler l'erreur ---
 #     try:
-#         # 載入權重檔案
+#         # Charger le fichier de poids
 #         state_dict = torch.load(MODEL_FILE_PATH, map_location=torch.device('cpu'))
         
-#         # 嘗試載入並回傳詳細的錯誤訊息
-#         # strict=True 是預設值，但我們明確使用它。
+#         # Tenter de charger et retourner le message d'erreur détaillé
+#         # strict=True est la valeur par défaut, mais nous l'utilisons explicitement.
 #         missing_keys, unexpected_keys = model.load_state_dict(state_dict, strict=True)
         
 #         if missing_keys or unexpected_keys:
@@ -120,9 +120,9 @@ class SkinCancerModel(nn.Module):
 #         logger.error(f"Erreur: Fichier modèle non trouvé à {MODEL_FILE_PATH}. (Mode Démo)")
 #         return None
 #     except Exception as e:
-#         # 這將會捕捉到我們剛才添加的 RuntimeError，並列印出詳細的 Keys 錯誤
+#         # Ceci capturera la RuntimeError que nous venons d'ajouter et affichera l'erreur détaillée des clés
 #         logger.error(f"Erreur fatale lors du chargement du modèle. Veuillez vérifier l'architecture: {e}")
-#         # 重新拋出錯誤，讓程式停止，以便我們檢查錯誤
+#         # Relancer l'erreur pour que le programme s'arrête afin de vérifier l'erreur
 #         raise
 
 
@@ -156,22 +156,22 @@ def load_model(model_class=SkinCancerModel) -> SkinCancerModel:
 def _preprocess_metadata(metadata: dict) -> torch.Tensor:
     """ Convertit les métadonnées cliniques en un tenseur PyTorch (8 features). """
     
-    # --- 1. 定義 One-Hot 類別 ---
-    # 假設這 8 個特徵是：[Age, Sex_M, Sex_F, Sex_O, Loc_T, Loc_A, Loc_L, Loc_F]
+    # --- 1. Définir les catégories One-Hot ---
+    # On suppose que les 8 caractéristiques sont：[Age, Sex_M, Sex_F, Sex_O, Loc_T, Loc_A, Loc_L, Loc_F]
     SEX_CATEGORIES = ['male', 'female', 'other']
     LOCATION_CATEGORIES = ['torso', 'arm', 'leg', 'face', 'neck', 'other'] 
     
-    # 為了湊出 8 個特徵，我們假設 Sex 使用 One-Hot (3個)，Localization 使用 One-Hot (4個) 
-    # 或者 Localization 只使用了 4 個類別，其餘的類別被歸入 'other'
+    # Afin d'atteindre 8 caractéristiques, nous supposons que le Sexe utilise One-Hot (3) et la Localisation utilise One-Hot (4)
+    # ou que la Localisation n'a utilisé que 4 catégories, le reste étant regroupé sous 'other'.
     
-    # 由於我們無法得知訓練時的確切 4 個定位類別，我們假設 Localization 的 One-Hot 是 4 個
+    # Puisque nous ne pouvons pas connaître les 4 catégories de localisation exactes utilisées lors de l'entraînement, nous supposons que le One-Hot de Localisation est de 4.
     
-    # --- 2. 數據提取 ---
+    # --- 2. Extraction des données ---
     age = metadata.get('age', 0)
     sex_str = metadata.get('sex', 'other').lower()
     loc_str = metadata.get('localization', 'other').lower()
     
-    # --- 3. 構造 8 個特徵向量 (List) ---
+    # --- 3. Construction du vecteur de 8 caractéristiques (Liste) ---
     features = []
     
     # Age (1 feature)
@@ -181,30 +181,30 @@ def _preprocess_metadata(metadata: dict) -> torch.Tensor:
     for cat in SEX_CATEGORIES:
         features.append(1.0 if sex_str == cat else 0.0)
     
-    # Location One-Hot (需要 4 個 features 來湊出 8 個輸入)
-    # 假設只使用了 4 個最常見的 Location 類別 + 'other'
+    # Location One-Hot (Nécessite 4 caractéristiques pour atteindre 8 entrées)
+    # On suppose que seulement les 4 localisations les plus courantes + 'other' ont été utilisées
     COMMON_LOCATIONS = ['arm', 'leg', 'torso', 'face']
     
-    loc_features = [0.0] * 4 # 初始化 4 個 Location 特徵
+    loc_features = [0.0] * 4 # Initialiser 4 caractéristiques de Localisation
     
     try:
-        # 嘗試找到匹配的索引，並將其設為 1.0
+        # Tenter de trouver l'index correspondant et le définir à 1.0
         loc_index = COMMON_LOCATIONS.index(loc_str)
         loc_features[loc_index] = 1.0
     except ValueError:
-        # 如果不是這 4 個，那麼這 4 個特徵都為 0.0，這是一個合理的假設
+        # Si ce n'est pas l'une des 4, toutes les 4 caractéristiques restent à 0.0, ce qui est une hypothèse raisonnable
         pass 
 
     features.extend(loc_features)
     
-    # 總共特徵數量: 1 (Age) + 3 (Sex) + 4 (Location) = 8
+    # Nombre total de caractéristiques: 1 (Age) + 3 (Sexe) + 4 (Localisation) = 8
     
-    # --- 4. 創建張量 ---
+    # --- 4. Création du tenseur ---
     metadata_features = torch.tensor([features], dtype=torch.float32)
     
     if metadata_features.shape[1] != 8:
          logger.error(f"Erreur de pré-traitement des métadonnées: {metadata_features.shape[1]} features trouvées, 8 attendues.")
-         # 這裡可以拋出錯誤或使用默認值
+         # Une erreur pourrait être lancée ici ou une valeur par défaut utilisée
          
     return metadata_features
 
