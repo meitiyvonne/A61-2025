@@ -41,7 +41,8 @@ COPY packages/skin_cancer_model/skin_cancer_model/*.pt /app/packages/skin_cancer
 RUN pip install ./packages/skin_cancer_model
 
 # 6. Exposition du port: 
-EXPOSE 8000
+# EXPOSE 8000
+EXPOSE 5000
 
 # 7. Commande de démarrage: 
 # CMD ["python", "app.py"]
