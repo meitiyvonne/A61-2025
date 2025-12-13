@@ -25,8 +25,13 @@ RUN pip install --upgrade pip && \
 # Copie du dossier 'packages' entier
 COPY packages /app/packages 
 
+# NOUVEAU: COPIE EXPLICITE DES TEMPLATES À LA RACINE DU WORKDIR
+# C'est la ligne CRUCIALE qui corrige l'erreur TemplateNotFound. 
+# Flask trouvera ainsi les templates à /app/templates/.
+COPY packages/skin_cancer_model/templates /app/templates
+
 # Copie du fichier de lancement de l'API 
-COPY packages/skin_cancer_model/app.py /app/app.py 
+# COPY packages/skin_cancer_model/app.py /app/app.py 
 
 # CRUCIAL: Utilisation de joker (*) pour copier le fichier de poids du modèle (.pt)
 COPY packages/skin_cancer_model/skin_cancer_model/*.pt /app/packages/skin_cancer_model/skin_cancer_model/
@@ -39,4 +44,5 @@ RUN pip install ./packages/skin_cancer_model
 EXPOSE 8000
 
 # 7. Commande de démarrage: 
-CMD ["python", "app.py"]
+# CMD ["python", "app.py"]
+CMD ["python", "/app/packages/skin_cancer_model/app.py"]
