@@ -257,7 +257,7 @@ Une fois le conteneur démarré,  on peut tester le point de terminaison API dan
 
 
 
-![image-20251214121713581](C:\Users\yvonne\AppData\Roaming\Typora\typora-user-images\image-20251214121713581.png)
+![Docker Desktop](image-20251214121713581.png)
 
 ## Accès à l’Interface Web (Démonstrateur)
 
@@ -293,9 +293,9 @@ Pour tester le processus complet de bout en bout:
 
 
 
-![image-20251214121635997](C:\Users\yvonne\AppData\Roaming\Typora\typora-user-images\image-20251214121635997.png)
+![WebUI](image-20251214121635997.png)
 
-![image-20251214121921224](C:\Users\yvonne\AppData\Roaming\Typora\typora-user-images\image-20251214121921224.png)
+![Result](image-20251214121921224.png)
 
 
 
