@@ -257,6 +257,8 @@ Une fois le conteneur démarré,  on peut tester le point de terminaison API dan
 
 
 
+![image-20251214121713581](C:\Users\yvonne\AppData\Roaming\Typora\typora-user-images\image-20251214121713581.png)
+
 ## Accès à l’Interface Web (Démonstrateur)
 
 Le service API fonctionne également comme un démonstrateur Web simple permettant de téléverser des images et de tester la prédiction directement via un navigateur.
@@ -288,6 +290,12 @@ Pour tester le processus complet de bout en bout:
 3. Cliquez sur le bouton Lancer la Prédiction.
 
 * **Résultat Attendu : ** Le navigateur doit afficher la page de résultats (rendu de *templates/result.html*), affichant la **Prédiction** finale, la **Probabilité** associée et la **Classe de diagnostic** prédite par le modèle.
+
+
+
+![image-20251214121635997](C:\Users\yvonne\AppData\Roaming\Typora\typora-user-images\image-20251214121635997.png)
+
+![image-20251214121921224](C:\Users\yvonne\AppData\Roaming\Typora\typora-user-images\image-20251214121921224.png)
 
 
 
