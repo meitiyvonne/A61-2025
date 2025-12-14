@@ -13,8 +13,16 @@ from skin_cancer_model.__init__ import logger
 from skin_cancer_model.image_processor import validate_and_process_image 
 # NOUVELLE IMPORTATION: Les vraies fonctions de modèle
 from skin_cancer_model.prediction import load_model, make_prediction 
-
 import os
+
+<<<<<<< HEAD
+import os
+=======
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+
+TEMPLATE_DIR = os.path.join(APP_ROOT, 'templates')
+>>>>>>> cc6e8a220aef2db7b71e2b1626b258575fca86ea
 # ==========================================
 # Application Flask
 # ==========================================
