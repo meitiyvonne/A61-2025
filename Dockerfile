@@ -22,6 +22,11 @@ RUN pip install --upgrade pip && \
 
 # --- Étape 4: Copie du code source et du modèle ---
 
+# 【CORRECTIF MAJEUR】Copie l'intégralité du répertoire du projet (y compris packages/ et templates/)
+# Ceci garantit que toutes les sous-structures de dossiers sont préservées,
+# ce qui corrige à la fois l'erreur TemplateNotFound et l'erreur du modèle non trouvé.
+COPY . /app
+
 # Copie du dossier 'packages' entier
 COPY packages /app/packages 
 
@@ -35,6 +40,7 @@ COPY packages/skin_cancer_model/templates /app/templates
 
 # CRUCIAL: Utilisation de joker (*) pour copier le fichier de poids du modèle (.pt)
 COPY packages/skin_cancer_model/skin_cancer_model/*.pt /app/packages/skin_cancer_model/skin_cancer_model/
+
 
 # 5. Installation du package local: Correction du chemin
 # Important: Installe le package en spécifiant le répertoire où se trouve setup.py.
