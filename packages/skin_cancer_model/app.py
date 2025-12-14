@@ -16,9 +16,8 @@ from skin_cancer_model.prediction import load_model, make_prediction
 import os
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-
-
 TEMPLATE_DIR = os.path.join(APP_ROOT, 'templates')
+
 # ==========================================
 # Application Flask
 # ==========================================
