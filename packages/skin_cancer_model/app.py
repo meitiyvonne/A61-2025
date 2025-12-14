@@ -14,16 +14,20 @@ from skin_cancer_model.image_processor import validate_and_process_image
 # NOUVELLE IMPORTATION: Les vraies fonctions de modèle
 from skin_cancer_model.prediction import load_model, make_prediction 
 
-
+import os
 # ==========================================
 # Application Flask
 # ==========================================
+
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+TEMPLATE_DIR = os.path.join(APP_ROOT, 'templates')
 
 # Tenter de charger le VRAI modèle au démarrage de l'API (Partie 10)
 MODEL = load_model() 
 
 def create_app():
-    app = Flask(__name__, template_folder='templates') 
+    # app = Flask(__name__, template_folder='templates') 
+    app = Flask(__name__, template_folder=TEMPLATE_DIR)
     
     @app.route('/', methods=['GET'])
     def index():
