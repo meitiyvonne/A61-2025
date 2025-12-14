@@ -147,7 +147,8 @@ def load_model(model_class=SkinCancerModel) -> SkinCancerModel:
         model = model_class(num_classes=len(DIAGNOSIS_CLASSES))
         
         # 加載完整的 state_dict
-        state_dict = torch.load(MODEL_FILE_PATH, map_location=torch.device('cpu'))
+        # state_dict = torch.load(MODEL_FILE_PATH, map_location=torch.device('cpu'))
+        state_dict = torch.load(MODEL_FILE_PATH, map_location=torch.device('cpu'), weights_only=False)
 
         # Utiliser strict=False pour ignorer les clés manquantes (meta_proj) 
         model.load_state_dict(
